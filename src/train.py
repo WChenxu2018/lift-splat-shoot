@@ -10,13 +10,13 @@ from tensorboardX import SummaryWriter
 import numpy as np
 import os
 
-from .models import compile_model
-from .data import compile_data
-from .tools import SimpleLoss, get_batch_iou, get_val_info
+from src.models import compile_model
+from src.data import compile_data
+from src.tools import SimpleLoss, get_batch_iou, get_val_info
 
 
 def train(version,
-            dataroot='/data/nuscenes',
+            dataroot='data/nuscenes',
             nepochs=10000,
             gpuid=1,
 
@@ -58,6 +58,8 @@ def train(version,
                              'CAM_BACK_LEFT', 'CAM_BACK', 'CAM_BACK_RIGHT'],
                     'Ncams': ncams,
                 }
+    print("version ", version)
+    print("dataroot ", dataroot)
     trainloader, valloader = compile_data(version, dataroot, data_aug_conf=data_aug_conf,
                                           grid_conf=grid_conf, bsz=bsz, nworkers=nworkers,
                                           parser_name='segmentationdata')
@@ -81,12 +83,12 @@ def train(version,
         for batchi, (imgs, rots, trans, intrins, post_rots, post_trans, binimgs) in enumerate(trainloader):
             t0 = time()
             opt.zero_grad()
-            preds = model(imgs.to(device),
-                    rots.to(device),
-                    trans.to(device),
-                    intrins.to(device),
-                    post_rots.to(device),
-                    post_trans.to(device),
+            preds = model(imgs.to(device), #imgs: torch.Size([4, 5, 3, 128, 352])
+                    rots.to(device), #torch.Size([4, 5, 3, 3])
+                    trans.to(device),#torch.Size([4, 5, 3])
+                    intrins.to(device), #torch.Size([4, 5, 3, 3])
+                    post_rots.to(device),#torch.Size([4, 5, 3, 3])
+                    post_trans.to(device),#torch.Size([4, 5, 3])
                     )
             binimgs = binimgs.to(device)
             loss = loss_fn(preds, binimgs)

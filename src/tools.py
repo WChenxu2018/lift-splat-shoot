@@ -185,7 +185,7 @@ def cumsum_trick(x, geom_feats, ranks):
     kept[:-1] = (ranks[1:] != ranks[:-1])
 
     x, geom_feats = x[kept], geom_feats[kept]
-    x = torch.cat((x[:1], x[1:] - x[:-1]))
+    x = torch.cat((x[:1], x[1:] - x[:-1])) #通道建做差
 
     return x, geom_feats
 

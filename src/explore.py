@@ -248,8 +248,8 @@ def eval_model_iou(version,
 
 def viz_model_preds(version,
                     modelf,
-                    dataroot='/data/nuscenes',
-                    map_folder='/data/nuscenes/mini',
+                    dataroot='data/nuscenes',
+                    map_folder='data/nuscenes',
                     gpuid=1,
                     viz_train=False,
 

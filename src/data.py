@@ -243,8 +243,12 @@ def worker_rnd_init(x):
 
 def compile_data(version, dataroot, data_aug_conf, grid_conf, bsz,
                  nworkers, parser_name):
-    nusc = NuScenes(version='v1.0-{}'.format(version),
-                    dataroot=os.path.join(dataroot, version),
+    print("dataroot", dataroot)
+    print("version", version)
+    print(os.path.join(dataroot, version))
+    print('v1.0-{}'.format(version))
+    nusc = NuScenes(version='{}'.format(version),
+                    dataroot=dataroot,
                     verbose=False)
     parser = {
         'vizdata': VizData,
