@@ -172,9 +172,9 @@ normalize_img = torchvision.transforms.Compose((
 
 
 def gen_dx_bx(xbound, ybound, zbound):
-    dx = torch.Tensor([row[2] for row in [xbound, ybound, zbound]])
-    bx = torch.Tensor([row[0] + row[2]/2.0 for row in [xbound, ybound, zbound]])
-    nx = torch.LongTensor([(row[1] - row[0]) / row[2] for row in [xbound, ybound, zbound]])
+    dx = torch.Tensor([row[2] for row in [xbound, ybound, zbound]]) #[ 0.5000,  0.5000, 20.0000] 步长
+    bx = torch.Tensor([row[0] + row[2]/2.0 for row in [xbound, ybound, zbound]]) #tensor([-49.7500, -49.7500,   0.0000])
+    nx = torch.LongTensor([(row[1] - row[0]) / row[2] for row in [xbound, ybound, zbound]]) #tensor([200, 200,   1]) 单元格个数
 
     return dx, bx, nx
 

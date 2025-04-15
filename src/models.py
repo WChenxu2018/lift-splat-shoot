@@ -204,7 +204,7 @@ class LiftSplatShoot(nn.Module):
         # flatten x
         x = x.reshape(Nprime, C) #torch.Size([144320, 64]) 包含了深度特征
 
-        # flatten indices
+        # flatten indices shift到非负值(从x=-50开始)
         geom_feats = ((geom_feats - (self.bx - self.dx/2.)) / self.dx).long()
         geom_feats = geom_feats.view(Nprime, 3) #torch.Size([144320, 3]) camera系下的视锥图
         batch_ix = torch.cat([torch.full([Nprime//B, 1], ix,
